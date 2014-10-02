@@ -8,10 +8,6 @@
 - user: name={{aem_os_user}} group={{aem_os_user}} state=present
   sudo: true
 
-#- name: setting authorized_key {{ ansible_facts.ansible_env.PWD }}
-#  authorized_key: user=aem key="{{ lookup('file', '{{ansible_facts.ansible_env.PWD}}/.ssh/id_rsa.pub') }}" state=present
-#  sudo: true
-
 - name: copy {{aem_quickstart_jar}} to {{aem_install_path}}
   copy: src="{{aem_quickstart_jar}}" dest="{{aem_install_path}}/" owner={{aem_os_user}} group={{aem_os_user}} mode=0644
   sudo: true
@@ -26,11 +22,3 @@
   command: java -Xmx1024m -XX:MaxPermSize=256M -jar {{aem_quickstart_jar | basename}} -unpack -r {{aem_all_runmodes}}
   args:
     chdir: "{{aem_install_path}}"
-
-- name: copy /etc/default/aem-{{aem_role_runmode}}
-  template: src=etc/default/aem-env-script.j2 dest=/etc/default/aem-{{aem_role_runmode}} owner=root group=root mode=0644
-  sudo: true
-
-- name: copy /etc/init.d/aem-{{aem_role_runmode}} 
-  template: src=etc/init.d/aem-start-script.j2 dest=/etc/init.d/aem-{{aem_role_runmode}} owner=root group=root mode=0744
-  sudo: true
