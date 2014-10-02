@@ -1,0 +1,14 @@
+---
+- name: create working directory ({{working_dir}})
+  file: path={{working_dir}} state=directory
+
+- name: copy Dockerfile
+  template: src=Dockerfile.j2 dest={{working_dir}}/Dockerfile
+
+- name: copy {{aem_files | join(', ')}} to {{working_dir}}
+  copy: src="{{item}}" dest="{{working_dir}}{{item | basename}}"
+  with_items: aem_files
+
+#- name: build Docker image
+#  docker_image: path={{working_dir}} name="posti/aem-author" state=build
+#  sudo: yes

@@ -1,0 +1,16 @@
+FROM ansible/ubuntu14.04-ansible:stable
+
+ADD aem-6.0-quickstart.jar /opt/aem/aem-6.0-quickstart.jar
+ADD license.properties     /opt/aem/license.properties
+ADD ansible/roles          roles
+ADD ansible/author.yml     author.yml
+ADD ansible/development    development 
+ADD aem-6-starter          /opt/aem/docker-starter \
+ && chmod    0744          /opt/aem/docker-starter \
+ && chown aem:aem          /opt/aem/docker-starter
+
+RUN ansible-playbook -i development author.yml --extra-vars "aem_quickstart_jar=/opt/aem/aem-6.0-quickstart.jar aem_license_file=/opt/aem/license.properties" --connection=local
+
+ENTRYPOINT /opt/aem/docker-starter
+
+EXPOSE 4502
