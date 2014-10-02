@@ -2,13 +2,22 @@
 - name: create working directory ({{working_dir}})
   file: path={{working_dir}} state=directory
 
+- name: copy aem-6-starter
+  copy: src=aem-6-starter dest={{working_dir}}/aem-6-starter
+
 - name: copy Dockerfile
-  template: src=Dockerfile.j2 dest={{working_dir}}/Dockerfile
+  copy: src=Dockerfile dest={{working_dir}}/Dockerfile
+
+- name: copy local inventory
+  copy: src=local dest={{working_dir}}/local
+
+- name: copy aem playbook
+  copy: src=aem dest={{working_dir}}/aem
 
 - name: copy {{aem_files | join(', ')}} to {{working_dir}}
   copy: src="{{item}}" dest="{{working_dir}}{{item | basename}}"
   with_items: aem_files
 
-#- name: build Docker image
-#  docker_image: path={{working_dir}} name="posti/aem-author" state=build
-#  sudo: yes
+- name: build Docker image
+  docker_image: path={{working_dir}} name="posti/aem-author" state=build
+  sudo: yes
