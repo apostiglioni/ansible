@@ -19,6 +19,6 @@
 - name: unpack {{aem_install_path}}/{{aem_quickstart_jar}}
   sudo: true
   sudo_user: "{{aem_os_user}}"
-  command: java -Xmx1024m -XX:MaxPermSize=256M -jar {{aem_quickstart_jar | basename}} -unpack -r {{aem_all_runmodes}}
+  command: java -Xmx1024m -XX:MaxPermSize=256M -jar {{aem_quickstart_jar | basename}} -unpack -r {{aem_role_runmode}}
   args:
     chdir: "{{aem_install_path}}"
