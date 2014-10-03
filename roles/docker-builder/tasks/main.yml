@@ -3,16 +3,16 @@
   file: path={{working_dir}} state=directory
 
 - name: copy aem-6-starter
-  copy: src=aem-6-starter dest={{working_dir}}/aem-6-starter
+  copy: src=aem-6-starter dest={{working_dir}}/
 
 - name: copy Dockerfile
-  copy: src=Dockerfile dest={{working_dir}}/Dockerfile
+  copy: src=Dockerfile dest={{working_dir}}/
 
 - name: copy local inventory
-  copy: src=local dest={{working_dir}}/local
+  copy: src=local dest={{working_dir}}/
 
 - name: copy aem playbook
-  copy: src=aem dest={{working_dir}}/aem
+  copy: src=aem.yml dest={{working_dir}}/
 
 - name: copy {{aem_files | join(', ')}} to {{working_dir}}
   copy: src="{{item}}" dest="{{working_dir}}{{item | basename}}"
