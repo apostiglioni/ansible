@@ -67,7 +67,7 @@ if [ $CQ_FILE_SIZE_LIMIT ]; then
 	fi
 fi
 
-cd $CQ_HOME
+cd $CQ_HOME/crx-quickstart
 if [ -z $CQ_JARFILE ]; then
 	CQ_JARFILE=`ls app/*.jar | head -1`
 fi
