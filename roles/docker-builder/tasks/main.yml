@@ -18,6 +18,8 @@
   copy: src="{{item}}" dest="{{working_dir}}{{item | basename}}"
   with_items: aem_files
 
+- service: name=docker.io state=started
+
 - name: build Docker image
-  docker_image: path={{working_dir}} name="posti/aem-author" state=build
   sudo: yes
+  docker_image: path={{working_dir}} name="posti/aem-base" state=build
